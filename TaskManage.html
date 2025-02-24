@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>TaskManage</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        text-decoration: none;
+        list-style-type: none;
+        color: black;
+      }
+
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        padding: 12px 24px 12px 24px;
+        text-align: center;
+      }
+
+      main {
+        margin-top: 120px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border: 3px solid gainsboro;
+        border-radius: 24px;
+      }
+
+      section.form-area {
+        padding: 12px;
+        border-bottom: 1px solid gainsboro;
+      }
+
+      section.form-area form {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      li.task-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px;
+      }
+
+      .task-content {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        margin-right: 12px;
+      }
+
+      section.filter-area {
+        padding: 24px;
+        border-top: 1px solid gainsboro;
+      }
+
+      .finished {
+        text-decoration: line-through;
+      }
+
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>在线任务管理应用</h1>
+    </header>
+    <main>
+      <section class="form-area">
+        <form>
+          <input type="text" class="input" />
+          <input type="submit" class="submit-btn" />
+        </form>
+      </section>
+      <section class="list-area">
+        <ul>
+          暂无任务
+        </ul>
+      </section>
+      <section class="filter-area">
+        <button id="all-btn">全部任务</button>
+        <button id="pending-btn">未完成任务</button>
+        <button id="finished-btn">已完成任务</button>
+      </section>
+    </main>
+
+    <script>
+      let taskList = [
+        {
+          content: "打扫卫生",
+          createdAt: "2.7",
+          finished: false,
+        },
+        {
+          content: "整理换季衣物",
+          createdAt: "2.9",
+          finished: false,
+        },
+        {
+          content: "学习JavaScript",
+          createdAt: "2.10",
+          finished: false,
+        }
+      ]
+      let trueList = taskList;
+      const listElement = document.querySelector(".list-area ul");
+      const input = document.querySelector(".input");
+      const submitBtn = document.querySelector(".submit-btn");
+      const allBtn = document.getElementById("all-btn");
+      const pendingBtn = document.getElementById("pending-btn");
+      const finishedBtn = document.getElementById("finished-btn");
+      let deleteBtns = document.getElementsByClassName("delete-btn");
+
+      const showTaskList = () => {
+        listElement.innerHTML = "";
+
+        taskList.map((task) => {
+          const li = document.createElement("li");
+          li.classList.add("task-item");
+          li.innerHTML = 
+            `<div class="task-content">
+              <p>${task.content.trim()}</p>
+              <time>${task.createdAt}</time>
+            </div>
+            <div class="task-process">
+              <button class="delete-btn">删除</button>
+              <button class="finish-btn">已完成</button>
+            </div>`;
+          listElement.appendChild(li);
+        });
+
+        let deleteBtns = document.getElementsByClassName("delete-btn");
+        for (let i = 0; i < deleteBtns.length ; i++) {
+          deleteBtns[i].addEventListener("click", () => {
+            console.log(i);
+            taskList.splice(i, 1);
+            showTaskList();
+            trueList = taskList;
+          });
+        }
+
+        let finishBtns = document.getElementsByClassName("finish-btn");
+        for (let i = 0; i < finishBtns.length ; i++) {
+          finishBtns[i].addEventListener("click", () => {
+            taskList[i].finished = true;
+            const taskItems = document.getElementsByClassName("task-content");
+            taskItems[i].classList.add("finished");
+            trueList = taskList;
+          });
+        }
+      }
+
+      window.onload = showTaskList;
+
+      submitBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+
+        let date = new Date();
+        
+        const newTask = {
+          content: input.value,
+          createdAt: date.getMonth() + "." + date.getDate(),
+          finished: false,
+        };
+
+        console.log(newTask);
+
+        taskList.push(newTask);
+
+        console.log(taskList);
+        showTaskList();
+      })
+
+      allBtn.addEventListener('click', () => {
+        taskList = trueList;
+        showTaskList();
+      });
+
+      pendingBtn.addEventListener("click", () => {
+        taskList = trueList.filter(task => task.finished === false);
+        showTaskList();
+      });
+
+      finishedBtn.addEventListener("click", () => {
+        taskList = trueList.filter(task => task.finished === true);
+        showTaskList();
+      })
+    </script>
+  </body>
+</html>

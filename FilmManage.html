@@ -18,6 +18,7 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+        overflow-x: hidden;
       }
 
       .icon {
@@ -105,7 +106,7 @@
       }
 
       section.form-content {
-        margin: 8px;
+        margin: 24px;
         padding: 24px;
         border: 1px solid gainsboro;
         border-radius: 24px;
@@ -126,6 +127,7 @@
         font-size: 24px;
         font-weight: 600;
         align-self: center;
+        color: #27a;
       }
 
       .submit-form .input {
@@ -178,7 +180,7 @@
       <div class="content-body">
         <section class="film-content">
           <ul class="film-list">
-            <li class="single-film">
+            <!-- <li class="single-film">
               <img src="https://tse4-mm.cn.bing.net/th/id/OIP-C.gz875E8UGbyg6JpAtqzL-AHaNK?rs=1&pid=ImgDetMain" alt="" />
               <p class="film-name">流氓读书会</p>
               <p class="film-director">导演： 李章焄 / 刘范尚</p>
@@ -195,7 +197,7 @@
               <p class="film-name">流氓读书会</p>
               <p class="film-director">导演： 李章焄 / 刘范尚</p>
               <p class="release-year">首播： 2025</p>
-            </li>
+            </li> -->
           </ul>
         </section>
         <section class="form-content">
@@ -205,15 +207,15 @@
             </header>
             <div class="input">
               <span>电影名称</span>
-              <input type="text" name="film-name">
+              <input type="text" class="input-film-name">
             </div>
             <div class="input">
               <span>电影导演</span>
-              <input type="text" name="film-director">
+              <input type="text" class="input-film-director">
             </div>
             <div class="input">
               <span>上映年份</span>
-              <input type="text" name="release-year">
+              <input type="text" class="input-release-year">
             </div>
             <input type="submit" class="submit-btn" value="提     交">
           </form>
@@ -223,5 +225,65 @@
     <footer>
       <p>&copy;PoorShawn 2025</p>
     </footer>
+    <script>
+      let filmList = [
+        {
+          "filmName": "流氓读书会",
+          "filmDirector": "李章焄 / 刘范尚",
+          "releaseYear": 2025,
+        },
+        {
+          "filmName": "流氓读书会",
+          "filmDirector": "李章焄 / 刘范尚",
+          "releaseYear": 2025,
+        },
+        {
+          "filmName": "流氓读书会",
+          "filmDirector": "李章焄 /尚",
+          "releaseYear": 2025,
+        },
+      ];
+
+      window.onload = addFilms;
+
+      function addFilms() {
+        const filmListNode = document.getElementsByClassName("film-list")[0];
+        filmListNode.innerHTML = "";
+        filmList.map((film) => {
+          var newFilm = document.createElement("li");
+          newFilm.classList.add("single-film");
+          newFilm.innerHTML =
+            '<img src="https://tse4-mm.cn.bing.net/th/id/OIP-C.gz875E8UGbyg6JpAtqzL-AHaNK?rs=1&pid=ImgDetMain" alt="" />' + 
+            '<p class="film-name">' + film.filmName + '</p>' +
+            '<p class="film-director">导演：' + film.filmDirector + '</p>' +
+            '<p class="release-year">首播：' + film.releaseYear + '</p>';
+          
+          
+          filmListNode.appendChild(newFilm);
+        });
+      };
+
+      const submitBtn = document.getElementsByClassName("submit-btn")[0];
+
+      submitBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+
+        const newFilmName = document.getElementsByClassName("input-film-name")[0].value;
+        const newFilmDirector = document.getElementsByClassName("input-film-director")[0].value;
+        const newFilmReleaseYear = document.getElementsByClassName("input-release-year")[0].value;
+        const newFilm = {
+          "filmName": newFilmName,
+          "filmDirector": newFilmDirector,
+          "releaseYear": newFilmReleaseYear,
+        };
+
+        filmList.push(newFilm);
+        console.log(newFilm);
+
+        addFilms();
+      })
+
+      
+    </script>
   </body>
 </html>
