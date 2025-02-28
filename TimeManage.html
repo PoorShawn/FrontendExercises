@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Time Manage</title>
+  </head>
+  <body>
+    <h1>Try to use setTimeout to replace setInterval.</h1>
+    <script>
+      // setTimeout(() => alert("setTimeout"), 1000);
+      // setInterval(() => {
+      //   alert("setInterval");
+      // }, 5000);
+      function myInterval(func, timeout) {
+        setTimeout(func, timeout);
+        myInterval(func, timeout);
+      }
+
+      myInterval(() => alert("myInterval"), 5000);
+    </script>
+  </body>
+</html>

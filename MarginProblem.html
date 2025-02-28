@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>margin塌陷和合并</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        text-decoration: none;
+        list-style-type: none;
+      }
+
+      .parent {
+        width: 100px;
+        height: 100px;
+        background-color: aquamarine;
+        margin-top: 100px;
+        margin-left: 100px;
+        overflow: hidden;
+      }
+
+      .child {
+        width: 50px;
+        height: 50px;
+        background-color: beige;
+        margin-top: 50px;
+        margin-left: 50px;
+      }
+    </style>
+  </head>
+  <body>
+    <section>
+      <h1>margin塌陷:</h1>
+      <div class="parent">
+        <div class="child">
+        </div>
+      </div>
+    </section>
+  </body>
+</html>
